@@ -1,69 +1,352 @@
-<html><head>
-<meta charset="utf-8"/>
-<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
-<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B600%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
-<title>Stitch Design</title>
-<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style type="text/tailwindcss">
-      :root {
-        --primary-color: #0c77f2;
-      }
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Bahasa Inggris Kelas 6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .correct {
+            background-color: #22c55e !important;
+            color: white !important;
+            transform: scale(1.05);
+            border-color: #16a34a;
+        }
+        .incorrect {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #dc2626;
+        }
+        .disabled-level {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
     </style>
 </head>
-<body style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
-<div class="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden">
-<div class="layout-container flex h-full grow flex-col">
-<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-slate-200 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-md md:px-10">
-<div class="flex items-center gap-3 text-slate-900">
-<div class="size-6 text-[var(--primary-color)]">
-<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
-</svg>
-</div>
-<h2 class="text-xl font-bold leading-tight tracking-tight text-slate-900">English Quiz</h2>
-</div>
-<div class="flex items-center gap-6">
-<nav class="hidden md:flex items-center gap-6">
-<a class="text-slate-700 hover:text-[var(--primary-color)] text-sm font-medium transition-colors" href="#">Home</a>
-<a class="text-slate-700 hover:text-[var(--primary-color)] text-sm font-medium transition-colors" href="#">About</a>
-<a class="text-slate-700 hover:text-[var(--primary-color)] text-sm font-medium transition-colors" href="#">Contact</a>
-</nav>
-<button class="flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-5 bg-[var(--primary-color)] text-slate-50 text-sm font-semibold leading-normal tracking-wide shadow-md transition-all hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-<span class="truncate">Start Quiz</span>
-</button>
-</div>
-</header>
-<main class="flex flex-1 items-center justify-center px-4 py-8 md:px-0 md:py-12">
-<div class="layout-content-container w-full max-w-4xl">
-<div class="@container">
-<div class="flex min-h-[560px] flex-col gap-8 rounded-xl bg-cover bg-center bg-no-repeat p-6 shadow-xl @[640px]:gap-10 @[640px]:p-10 items-center justify-center text-center" style='background-image: linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.7) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFm4-uGdZyeJd8rPSXIvctIscaROEOEGiEtuB-BLD-g0YG1kSW8leJx5RyL07tofBn9wZJetziom7nPqJpD0LNvhPh_Ma8TaPGYGvjmo7DTKLQLCcIF41Up7CnUFu6QRGUxXrnGEKGCYRV9ik6bY_auS6XwDpy8_or6cRn63vwnLPfPn-LqNS__Yx-dioIxq4BI7fjZzhKKUBcCUWPoF7VN8jmhgUIi-mfsPZFYW4VGlXMbn9cweHKYVHlr9XFyBw8zXiL5heFFA5w");'>
-<div class="flex flex-col gap-4">
-<h1 class="text-white text-4xl font-bold leading-tight tracking-tighter @[640px]:text-5xl">
-                    Test Your English Skills
-                  </h1>
-<p class="text-slate-200 text-base font-normal leading-relaxed @[640px]:text-lg max-w-2xl mx-auto">
-                    Welcome to our English quiz website! Challenge yourself with a variety of quizzes designed to improve your grammar, vocabulary, and overall language proficiency. Start your learning journey today!
-                  </p>
-</div>
-<button class="flex min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 @[640px]:h-14 @[640px]:px-8 bg-[var(--primary-color)] text-slate-50 text-base font-semibold leading-normal tracking-wide shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-<span class="truncate">Start Quiz Now</span>
-</button>
-</div>
-</div>
-</div>
-</main>
-<footer class="border-t border-solid border-slate-200 bg-slate-100 py-8 text-center">
-<div class="mx-auto max-w-4xl px-4">
-<div class="mb-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-<a class="text-slate-600 hover:text-[var(--primary-color)] text-sm font-medium transition-colors" href="#">Privacy Policy</a>
-<a class="text-slate-600 hover:text-[var(--primary-color)] text-sm font-medium transition-colors" href="#">Terms of Service</a>
-<a class="text-slate-600 hover:text-[var(--primary-color)] text-sm font-medium transition-colors" href="#">Contact Us</a>
-</div>
-<p class="text-slate-500 text-sm">©2024 English Quiz. All rights reserved.</p>
-</div>
-</footer>
-</div>
-</div>
+<body class="bg-blue-50 min-h-screen flex items-center justify-center p-4">
 
-</body></html>
+    <div id="app-container" class="w-full max-w-2xl mx-auto">
+
+        <div id="start-screen" class="bg-white p-8 rounded-2xl shadow-xl text-center">
+            <img src="https://i0.wp.com/altc.alt.ac.uk/blog/wp-content/uploads/sites/1112/2022/08/Blog-Cover-Guidlines.png?resize=707%2C409&ssl=1" alt="Logo Kuis" class="mx-auto mb-6 rounded-full">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Selamat Datang di Kuis Inggris!</h1>
+            <p class="text-gray-500 mb-6">Siap untuk menguji kemampuanmu?</p>
+            <div class="max-w-sm mx-auto">
+                <input type="text" id="player-name-input" placeholder="Ketik namamu di sini..." class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                <button id="start-button" class="w-full mt-4 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-blue-600 transition-transform transform hover:scale-105 active:scale-100 shadow-md">
+                    Mulai Kuis!
+                </button>
+            </div>
+        </div>
+
+        <div id="difficulty-screen" class="hidden bg-white p-8 rounded-2xl shadow-xl">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Halo, <span id="player-name-display"></span>!</h2>
+                    <p class="text-gray-500">Pilih tingkat kesulitan untuk memulai.</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-500 text-sm">Skor Total</p>
+                    <p id="total-score-display" class="text-3xl font-bold text-blue-500">0</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div id="level-easy" class="border-2 border-gray-200 p-4 rounded-lg">
+                    <p class="text-lg font-semibold text-gray-500">Tingkat</p>
+                    <h3 class="text-2xl font-bold text-green-500 mb-4">Mudah</h3>
+                    <p class="text-sm text-gray-400 mb-1">Skor Level</p>
+                    <p id="score-easy" class="text-xl font-bold text-gray-600">- / -</p>
+                    <button data-difficulty="easy" class="difficulty-btn mt-4 w-full bg-green-500 text-white font-bold py-2 rounded-lg hover:bg-green-600 transition">Pilih</button>
+                </div>
+                <div id="level-medium" class="border-2 border-gray-200 p-4 rounded-lg">
+                    <p class="text-lg font-semibold text-gray-500">Tingkat</p>
+                    <h3 class="text-2xl font-bold text-yellow-500 mb-4">Sedang</h3>
+                    <p class="text-sm text-gray-400 mb-1">Skor Level</p>
+                    <p id="score-medium" class="text-xl font-bold text-gray-600">- / -</p>
+                    <button data-difficulty="medium" class="difficulty-btn mt-4 w-full bg-yellow-500 text-white font-bold py-2 rounded-lg hover:bg-yellow-600 transition">Pilih</button>
+                </div>
+                <div id="level-difficult" class="border-2 border-gray-200 p-4 rounded-lg">
+                    <p class="text-lg font-semibold text-gray-500">Tingkat</p>
+                    <h3 class="text-2xl font-bold text-red-500 mb-4">Sulit</h3>
+                    <p class="text-sm text-gray-400 mb-1">Skor Level</p>
+                    <p id="score-difficult" class="text-xl font-bold text-gray-600">- / -</p>
+                    <button data-difficulty="difficult" class="difficulty-btn mt-4 w-full bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition">Pilih</button>
+                </div>
+            </div>
+             <div id="final-message" class="hidden mt-6 text-center bg-blue-100 p-4 rounded-lg">
+                 <h3 class="text-2xl font-bold text-blue-800">Kerja Bagus!</h3>
+                 <p class="text-blue-700">Kamu telah menyelesaikan semua level. Teruslah berlatih!</p>
+             </div>
+        </div>
+
+        <div id="quiz-screen" class="hidden bg-white p-8 rounded-2xl shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <p class="text-lg font-semibold">Tingkat: <span id="quiz-difficulty" class="capitalize"></span></p>
+                <p id="question-counter" class="text-lg font-semibold">Pertanyaan 1/10</p>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-500" style="width: 10%"></div>
+            </div>
+
+            <div id="story-container" class="hidden mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 class="font-bold text-gray-800 mb-2">Baca teks berikut:</h4>
+                <p id="story-text" class="text-base text-gray-700 whitespace-pre-wrap"></p>
+            </div>
+
+            <div id="question-image-container" class="hidden mb-6 w-full h-48 flex justify-center items-center bg-gray-100 rounded-lg overflow-hidden">
+            </div>
+
+            <p id="question-text" class="text-xl md:text-2xl font-semibold text-gray-800 mb-8 text-center min-h-[80px] flex items-center justify-center"></p>
+            <div id="answers-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>
+            <div id="feedback-message" class="mt-6 text-center text-xl font-bold h-8"></div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+            easy: [
+                { question: "What is this?", image: "https://i.ibb.co/W4Yp476p/26-04.jpg", answers: ["Apple", "Orange", "Banana", "Grape"], correct: 0 },
+                { question: "How many eyes do you have?",answers: ["One", "Two", "Three", "Four"], correct: 1 },
+                { question: "I like to drink __", image: "https://i.ibb.co/Z6v6ftBR/136484236-003229b3-c509-4f21-8dab-a2f2bb8f7165.jpg", answers: ["Water", "Milk", "Juice", "Coffe"], correct: 1 },
+                { question: "What color is the sun?", answers: ["Blue", "Green", "Yellow", "Red"], correct: 2 },
+                { question: "What do you use to write?", answers: ["Eraser", "Ruler", "Pencil", "Book"], correct: 2 },
+                { question: "This is a __", image: "https://i.ibb.co/gMFCz5XB/418637305-8831c122-87df-42de-a86d-44e74ab7a800.jpg", answers: ["Dog", "Cat", "Bird", "Fish"], correct: 1 },
+                { question: "How do you say 'selamat pagi' in English?", answers: ["Good afternoon", "Good night", "Good morning", "Good evening"], correct: 2 },
+                { question: "What day comes after Monday?", answers: ["Sunday", "Tuesday", "Wednesday", "Thursday"], correct: 1 },
+                { question: "My mother is a __", image: "https://i.ibb.co/jvgKZKvB/34733142-6900-7-08.jpg",answers: ["Teacher", "Doctor", "Farmer", "Chef"], correct: 1 },
+                { question: "What season is it when the leaves fall?", answers: ["Summer", "Autumn", "Spring", "Winter"], correct: 1 },
+            ],
+            medium: [
+                { question: "My brother __ football every Sunday.", answers: ["play", "plays", "playing", "played"], correct: 1 },
+                { question: "There __ three books on the table.", answers: ["is", "am", "are", "be"], correct: 2 },
+                { question: "She __ a beautiful song yesterday.", answers: ["sing", "sings", "sang", "sung"], correct: 2 },
+                { question: "I usually wake up __ 6 o'clock in the morning.", answers: ["on", "in", "at", "for"], correct: 2 },
+                { question: "What time __ you usually go to bed?", answers: ["do", "does", "did", "going"], correct: 0 },
+                { question: "The cat is sleeping __ the chair.", answers: ["in", "on", "under", "next to"], correct: 1 },
+                { question: "He __ a new bicycle last week.", answers: ["buy", "buys", "boought", "buying"], correct: 2 },
+                { question: "__ is your favorite animal?", answers: ["When", "Who", "Where", "What"], correct: 3 },
+                { question: "My mother is taller __ my father.", answers: ["as", "then", "than", "from"], correct: 2 },
+                { question: "We __ go to the beach tomorrow.", answers: ["wil", "are", "is", "do"], correct: 0 },
+            ],
+            difficult: [
+                {
+                    story: "My name is Luna. I have a small garden behind my house. In my garden, I grow many kinds of flowers, like roses, sunflowers, and lilies. I also have some vegetables, such as tomatoes and carrots. Every morning, I water the plants and remove the weeds. My grandmother often helps me plant new seeds. I love spending time in my garden because it makes me feel peaceful.",
+                    question: "What does Luna have behind her house?",
+                    answers: ["A big house", "A small garden", "A large farm", "A pet shop"],
+                    correct: 1
+                },
+                {
+                    story: "My name is Luna. I have a small garden behind my house. In my garden, I grow many kinds of flowers, like roses, sunflowers, and lilies. I also have some vegetables, such as tomatoes and carrots. Every morning, I water the plants and remove the weeds. My grandmother often helps me plant new seeds. I love spending time in my garden because it makes me feel peaceful.",
+                    question: "What kinds of flowers does Luna grow?",
+                    answers: ["Tulips and orchids", "Roses, sunflowers, and lilies", "Daisies and poppies", "Cactuses and succulents"],
+                    correct: 1
+                },
+                {
+                    story: "My name is Luna. I have a small garden behind my house. In my garden, I grow many kinds of flowers, like roses, sunflowers, and lilies. I also have some vegetables, such as tomatoes and carrots. Every morning, I water the plants and remove the weeds. My grandmother often helps me plant new seeds. I love spending time in my garden because it makes me feel peaceful.",
+                    question: "Besides flowers, what else does Luna grow in her garden?",
+                    answers: ["Fruits", "Herbs", "Vegetables", "Trees"],
+                    correct: 2
+                },
+                {
+                    story: "My name is Luna. I have a small garden behind my house. In my garden, I grow many kinds of flowers, like roses, sunflowers, and lilies. I also have some vegetables, such as tomatoes and carrots. Every morning, I water the plants and remove the weeds. My grandmother often helps me plant new seeds. I love spending time in my garden because it makes me feel peaceful.",
+                    question: "What does Luna do every morning in her garden?",
+                    answers: ["Harvest the vegetables", "Water the plants and remove the weeds", "Plant new seeds", "Decorate the garden"],
+                    correct: 1
+                },
+                {
+                    story: "My name is Luna. I have a small garden behind my house. In my garden, I grow many kinds of flowers, like roses, sunflowers, and lilies. I also have some vegetables, such as tomatoes and carrots. Every morning, I water the plants and remove the weeds. My grandmother often helps me plant new seeds. I love spending time in my garden because it makes me feel peaceful.",
+                    question: "Who often helps Luna plant new seeds?",
+                    answers: ["Her mother", "Her father", "Her brother", "Her grandmother"],
+                    correct: 3
+                },
+                { question: "If I __ enough money, I __ a new book.", answers: ["have, buy", "had, would buy", "had, buy", "have, will buy"], correct: 3 },
+                { question: "She __ for two hours when her mother called her.", answers: ["was studying", "has been studying", "had been studying", "is studying"], correct: 2 },
+                { question: "The boy, __ parents are doctors, wants to be an engineer.", answers: ["who", "whom", "whose", "which"], correct: 2 },
+                { question: "Despite __ hard, he couldn't pass the exam.", answers: ["studying", "to study", "study", "studied"], correct: 0 },
+                { question: "By the time he arrived, the movie __ already __.", answers: ["had, started", "has, started", "was, starting", "is, starting"], correct: 0 }
+            ]
+        };
+
+        const startScreen = document.getElementById('start-screen');
+        const difficultyScreen = document.getElementById('difficulty-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+
+        const playerNameInput = document.getElementById('player-name-input');
+        const startButton = document.getElementById('start-button');
+        const playerNameDisplay = document.getElementById('player-name-display');
+        const totalScoreDisplay = document.getElementById('total-score-display');
+
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const storyContainer = document.getElementById('story-container');
+        const storyText = document.getElementById('story-text');
+        const questionImageContainer = document.getElementById('question-image-container');
+        const questionText = document.getElementById('question-text');
+        const answersContainer = document.getElementById('answers-container');
+        const quizDifficulty = document.getElementById('quiz-difficulty');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const finalMessage = document.getElementById('final-message');
+
+        let playerName = "";
+        let currentDifficulty = "";
+        let currentQuestionIndex = 0;
+        let scores = { easy: null, medium: null, difficult: null };
+        let totalScore = 0;
+        let completedLevels = [];
+
+        function initializeQuiz() {
+            playerName = playerNameInput.value.trim();
+            if (playerName === "") {
+                alert("Tolong masukkan namamu dulu ya!");
+                return;
+            }
+            playerNameDisplay.textContent = playerName;
+            startScreen.classList.add('hidden');
+            difficultyScreen.classList.remove('hidden');
+            updateScoreDisplays();
+        }
+
+        function selectDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            currentQuestionIndex = 0;
+            scores[currentDifficulty] = 0;
+
+            difficultyScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            quizDifficulty.textContent = difficulty;
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            feedbackMessage.textContent = '';
+
+            const levelData = quizData[currentDifficulty];
+            const questionData = levelData[currentQuestionIndex];
+            const questionNumber = currentQuestionIndex + 1;
+            const totalQuestions = levelData.length;
+
+            if (questionData.story) {
+                storyText.textContent = questionData.story;
+                storyContainer.classList.remove('hidden');
+            } else {
+                storyContainer.classList.add('hidden');
+            }
+
+            if (questionData.image) {
+                questionImageContainer.innerHTML = `<img src="${questionData.image}" alt="Petunjuk Pertanyaan" class="max-h-full max-w-full object-contain rounded-lg">`;
+                questionImageContainer.classList.remove('hidden');
+            } else {
+                questionImageContainer.innerHTML = '';
+                questionImageContainer.classList.add('hidden');
+            }
+
+            questionCounter.textContent = `Pertanyaan ${questionNumber}/${totalQuestions}`;
+            progressBar.style.width = `${(questionNumber / totalQuestions) * 100}%`;
+            questionText.innerHTML = questionData.question;
+
+            answersContainer.innerHTML = '';
+
+            questionData.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = "w-full p-4 border-2 border-gray-300 rounded-lg text-lg text-gray-700 hover:bg-blue-100 hover:border-blue-400 transition-all duration-200";
+                button.textContent = answer;
+                button.addEventListener('click', () => selectAnswer(index, button));
+                answersContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex, button) {
+            const levelData = quizData[currentDifficulty];
+            const questionData = levelData[currentQuestionIndex];
+            const correctIndex = questionData.correct;
+
+            const allAnswerButtons = answersContainer.querySelectorAll('button');
+            allAnswerButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === correctIndex) {
+                scores[currentDifficulty]++;
+                button.classList.add('correct');
+                feedbackMessage.textContent = 'Hebat! Jawabanmu Benar 👍';
+                feedbackMessage.style.color = '#22c55e';
+            } else {
+                button.classList.add('incorrect');
+                allAnswerButtons[correctIndex].classList.add('correct');
+                feedbackMessage.textContent = 'Oops! Coba lagi nanti ya 😟';
+                feedbackMessage.style.color = '#ef4444';
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < levelData.length) {
+                    showQuestion();
+                } else {
+                    finishLevel();
+                }
+            }, 2000);
+        }
+
+        function finishLevel() {
+            quizScreen.classList.add('hidden');
+            difficultyScreen.classList.remove('hidden');
+
+            if (!completedLevels.includes(currentDifficulty)) {
+                completedLevels.push(currentDifficulty);
+            }
+
+            updateScoreDisplays();
+
+            if (completedLevels.length === Object.keys(quizData).length) {
+                finalMessage.classList.remove('hidden');
+            }
+        }
+
+        function updateScoreDisplays() {
+            totalScore = 0;
+            for (const level in scores) {
+                const scoreDisplay = document.getElementById(`score-${level}`);
+                const levelButton = document.querySelector(`#level-${level} button`);
+
+                if (scores[level] !== null) {
+                    const maxScore = quizData[level].length;
+                    scoreDisplay.textContent = `${scores[level]} / ${maxScore}`;
+                    totalScore += scores[level];
+
+                    levelButton.classList.add('disabled-level');
+                    levelButton.disabled = true;
+                    levelButton.textContent = 'Selesai';
+
+                } else {
+                    const maxScore = quizData[level].length;
+                    scoreDisplay.textContent = `- / ${maxScore}`;
+                }
+            }
+            totalScoreDisplay.textContent = totalScore;
+        }
+
+        startButton.addEventListener('click', initializeQuiz);
+        playerNameInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                initializeQuiz();
+            }
+        });
+
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                selectDifficulty(button.dataset.difficulty);
+            });
+        });
+
+    </script>
+</body>
+</html>
