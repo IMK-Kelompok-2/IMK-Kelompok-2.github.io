@@ -4,8 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kuis Bahasa Inggris Kelas 6</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="htt                <button id="start-button" class="w-full mt-4 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-blue-600 transition-transform transform hover:scale-105 active:scale-100 shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300" 
+                        aria-describedby="start-help">
+                    <span id="start-button-text">Mulai Kuis!</span>
+                </button>
+                <div id="start-help" class="accessibility-info">Tekan Enter atau klik tombol untuk memulai</div>
+                <button id="help-button" class="mt-3 text-blue-500 hover:text-blue-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 rounded px-2 py-1">
+                    ❓ Butuh Bantuan?
+                </button>cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://font                </div>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="help-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="bg-blue-500 text-white p-6 rounded-t-2xl">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">📚 Bantuan Kuis Bahasa Inggris</h2>
+                        <button id="close-help-btn" class="text-white hover:text-gray-200 text-2xl focus:outline-none focus:ring-2 focus:ring-white rounded" aria-label="Tutup bantuan">×</button>
+                    </div>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="help-section">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">🚀</span>Cara Memulai Kuis
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li>Masukkan nama lengkap Anda di halaman utama</li>
+                            <li>Klik tombol "Mulai Kuis!" atau tekan Enter</li>
+                            <li>Pilih tingkat kesulitan yang sesuai dengan kemampuan Anda</li>
+                            <li>Mulai menjawab pertanyaan satu per satu</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">🎯</span>Tingkat Kesulitan
+                        </h3>
+                        <div class="space-y-2 text-gray-700">
+                            <p><span class="font-semibold text-green-600">🟢 Mudah:</span> Pertanyaan dasar, kosakata sederhana (10 soal, ~5 menit)</p>
+                            <p><span class="font-semibold text-yellow-600">🟡 Sedang:</span> Tata bahasa dan struktur kalimat (10 soal, ~8 menit)</p>
+                            <p><span class="font-semibold text-red-600">🔴 Sulit:</span> Pemahaman bacaan dan grammar lanjut (10 soal, ~12 menit)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">⌨️</span>Navigasi dan Kontrol
+                        </h3>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <ul class="space-y-1 text-sm text-gray-700">
+                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Tab</kbd> - Navigasi antar elemen</li>
+                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Enter</kbd> atau <kbd class="px-2 py-1 bg-gray-200 rounded">Space</kbd> - Pilih jawaban</li>
+                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Esc</kbd> - Kembali ke menu utama</li>
+                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Ctrl + H</kbd> - Buka bantuan ini</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">💡</span>Tips Mengerjakan Kuis
+                        </h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700">
+                            <li>Baca pertanyaan dengan teliti sebelum menjawab</li>
+                            <li>Perhatikan gambar jika tersedia sebagai petunjuk</li>
+                            <li>Untuk soal cerita, baca teks terlebih dahulu</li>
+                            <li>Gunakan tombol "Jeda" jika perlu istirahat</li>
+                            <li>Tombol "Lewati" tersedia jika kesulitan menjawab</li>
+                            <li>Review kesalahan setelah selesai untuk belajar</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">📊</span>Memahami Hasil
+                        </h3>
+                        <div class="space-y-2 text-gray-700">
+                            <p><span class="font-semibold">Skor:</span> Jumlah jawaban benar dari total pertanyaan</p>
+                            <p><span class="font-semibold">Persentase:</span> Tingkat akurasi jawaban Anda</p>
+                            <p><span class="font-semibold">Level Performa:</span> Penilaian kualitas hasil kuis</p>
+                            <p><span class="font-semibold">Rincian:</span> Detail setiap jawaban untuk pembelajaran</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>apis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -118,7 +208,7 @@
 
         <div id="start-screen" class="bg-white p-8 rounded-2xl shadow-xl text-center">
             <img src="https://i0.wp.com/altc.alt.ac.uk/blog/wp-content/uploads/sites/1112/2022/08/Blog-Cover-Guidlines.png?resize=707%2C409&ssl=1" alt="Logo Kuis Bahasa Inggris - Gambar buku dan pensil" class="mx-auto mb-6 rounded-full">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Selamat Datang di Kuis Inggris!</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Selamat Datang di Kuis Bahasa Inggris!</h1>
             <p class="text-gray-500 mb-6">Siap untuk menguji kemampuanmu?</p>
             <div class="max-w-sm mx-auto">
                 <label for="player-name-input" class="block text-left text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
@@ -135,9 +225,6 @@
                     <span id="start-button-text">Mulai Kuis!</span>
                 </button>
                 <div id="start-help" class="accessibility-info">Tekan Enter atau klik tombol untuk memulai</div>
-                <button id="help-button" class="mt-3 text-blue-500 hover:text-blue-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 rounded px-2 py-1">
-                    ❓ Butuh Bantuan?
-                </button>
             </div>
         </div>
 
@@ -299,82 +386,6 @@
                 <button id="back-to-levels-button" class="flex-1 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-blue-600 transition-transform transform hover:scale-105 active:scale-100 shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300">
                     🏠 Kembali ke Menu Utama
                 </button>
-            </div>
-        </div>
-
-        <!-- Help Modal -->
-        <div id="help-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div class="bg-blue-500 text-white p-6 rounded-t-2xl">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold">📚 Bantuan Kuis Bahasa Inggris</h2>
-                        <button id="close-help-btn" class="text-white hover:text-gray-200 text-2xl focus:outline-none focus:ring-2 focus:ring-white rounded" aria-label="Tutup bantuan">×</button>
-                    </div>
-                </div>
-                <div class="p-6 space-y-6">
-                    <div class="help-section">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                            <span class="mr-2">🚀</span>Cara Memulai Kuis
-                        </h3>
-                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                            <li>Masukkan nama lengkap Anda di halaman utama</li>
-                            <li>Klik tombol "Mulai Kuis!" atau tekan Enter</li>
-                            <li>Pilih tingkat kesulitan yang sesuai dengan kemampuan Anda</li>
-                            <li>Mulai menjawab pertanyaan satu per satu</li>
-                        </ol>
-                    </div>
-
-                    <div class="help-section">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                            <span class="mr-2">🎯</span>Tingkat Kesulitan
-                        </h3>
-                        <div class="space-y-2 text-gray-700">
-                            <p><span class="font-semibold text-green-600">🟢 Mudah:</span> Pertanyaan dasar, kosakata sederhana (10 soal, ~5 menit)</p>
-                            <p><span class="font-semibold text-yellow-600">🟡 Sedang:</span> Tata bahasa dan struktur kalimat (10 soal, ~8 menit)</p>
-                            <p><span class="font-semibold text-red-600">🔴 Sulit:</span> Pemahaman bacaan dan grammar lanjut (10 soal, ~12 menit)</p>
-                        </div>
-                    </div>
-
-                    <div class="help-section">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                            <span class="mr-2">⌨️</span>Navigasi dan Kontrol
-                        </h3>
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <ul class="space-y-1 text-sm text-gray-700">
-                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Tab</kbd> - Navigasi antar elemen</li>
-                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Enter</kbd> atau <kbd class="px-2 py-1 bg-gray-200 rounded">Space</kbd> - Pilih jawaban</li>
-                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Esc</kbd> - Kembali ke menu utama</li>
-                                <li><kbd class="px-2 py-1 bg-gray-200 rounded">Ctrl + H</kbd> - Buka bantuan ini</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="help-section">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                            <span class="mr-2">💡</span>Tips Mengerjakan Kuis
-                        </h3>
-                        <ul class="list-disc list-inside space-y-1 text-gray-700">
-                            <li>Baca pertanyaan dengan teliti sebelum menjawab</li>
-                            <li>Perhatikan gambar jika tersedia sebagai petunjuk</li>
-                            <li>Untuk soal cerita, baca teks terlebih dahulu</li>
-                            <li>Gunakan tombol "Jeda" jika perlu istirahat</li>
-                            <li>Tombol "Lewati" tersedia jika kesulitan menjawab</li>
-                            <li>Review kesalahan setelah selesai untuk belajar</li>
-                        </ul>
-                    </div>
-
-                    <div class="help-section">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                            <span class="mr-2">📊</span>Memahami Hasil
-                        </h3>
-                        <div class="space-y-2 text-gray-700">
-                            <p><span class="font-semibold">Skor:</span> Jumlah jawaban benar dari total pertanyaan</p>
-                            <p><span class="font-semibold">Persentase:</span> Tingkat akurasi jawaban Anda</p>
-                            <p><span class="font-semibold">Level Performa:</span> Penilaian kualitas hasil kuis</p>
-                            <p><span class="font-semibold">Rincian:</span> Detail setiap jawaban untuk pembelajaran</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

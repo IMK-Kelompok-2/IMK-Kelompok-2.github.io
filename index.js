@@ -2,7 +2,7 @@ const quizData = {
     easy: [
         { question: "What is this?", image: "https://i.ibb.co/W4Yp476p/26-04.jpg", answers: ["Apple", "Orange", "Banana", "Grape"], correct: 0 },
         { question: "How many eyes do you have?",answers: ["One", "Two", "Three", "Four"], correct: 1 },
-        { question: "I like to drink __", image: "https://i.ibb.co/Z6v6ftBR/136484236-003229b3-c509-4f21-8dab-a2f2bb8f7165.jpg", answers: ["Water", "Milk", "Juice", "Coffe"], correct: 1 },
+        { question: "I like to drink __", image: "https://i.ibb.co/Z6v6ftBR/136484236-003229b3-c509-4f21-8dab-a2f2bb8f7165.jpg", answers: ["Water", "Milk", "Juice", "Coffee"], correct: 1 },
         { question: "What color is the sun?", answers: ["Blue", "Green", "Yellow", "Red"], correct: 2 },
         { question: "What do you use to write?", answers: ["Eraser", "Ruler", "Pencil", "Book"], correct: 2 },
         { question: "This is a __", image: "https://i.ibb.co/gMFCz5XB/418637305-8831c122-87df-42de-a86d-44e74ab7a800.jpg", answers: ["Dog", "Cat", "Bird", "Fish"], correct: 1 },
@@ -18,10 +18,10 @@ const quizData = {
         { question: "I usually wake up __ 6 o'clock in the morning.", answers: ["on", "in", "at", "for"], correct: 2 },
         { question: "What time __ you usually go to bed?", answers: ["do", "does", "did", "going"], correct: 0 },
         { question: "The cat is sleeping __ the chair.", answers: ["in", "on", "under", "next to"], correct: 1 },
-        { question: "He __ a new bicycle last week.", answers: ["buy", "buys", "boought", "buying"], correct: 2 },
+        { question: "He __ a new bicycle last week.", answers: ["buy", "buys", "bought", "buying"], correct: 2 },
         { question: "__ is your favorite animal?", answers: ["When", "Who", "Where", "What"], correct: 3 },
         { question: "My mother is taller __ my father.", answers: ["as", "then", "than", "from"], correct: 2 },
-        { question: "We __ go to the beach tomorrow.", answers: ["wil", "are", "is", "do"], correct: 0 },
+        { question: "We __ go to the beach tomorrow.", answers: ["will", "are", "is", "do"], correct: 0 },
     ],
     difficult: [
         {
@@ -219,6 +219,7 @@ function selectDifficulty(difficulty) {
     showQuestion();
 }
 
+// Add hint button to quiz controls
 function showQuestion() {
     if (isPaused) return;
 
@@ -248,13 +249,14 @@ function showQuestion() {
         storyContainer.classList.add('hidden');
     }
 
-    // Show image with better accessibility
+    // Show image with better accessibility and fallback
     if (questionData.image) {
         questionImageContainer.innerHTML = `
             <img src="${questionData.image}"
                  alt="Gambar petunjuk untuk pertanyaan ini"
                  class="max-h-full max-w-full object-contain rounded-lg"
-                 onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'text-gray-500\\'>Gambar tidak dapat dimuat</div>'">
+                 loading="lazy"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'text-gray-500 p-4\\'>📷 Gambar tidak dapat dimuat</div>'">
         `;
         questionImageContainer.classList.remove('hidden');
     } else {
@@ -287,6 +289,22 @@ function showQuestion() {
 
         answersContainer.appendChild(button);
     });
+
+    // Update quiz controls with hint button
+    document.getElementById('skip-question-btn').disabled = false;
+
+    // Add hint button if it doesn't exist
+    let hintButton = document.getElementById('hint-question-btn');
+    if (!hintButton) {
+        hintButton = document.createElement('button');
+        hintButton.id = 'hint-question-btn';
+        hintButton.className = 'bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition focus:outline-none focus:ring-2 focus:ring-yellow-300';
+        hintButton.innerHTML = '💡 Petunjuk';
+        hintButton.addEventListener('click', showHint);
+
+        const controlsDiv = document.getElementById('quiz-controls');
+        controlsDiv.insertBefore(hintButton, controlsDiv.children[1]);
+    }
 
     // Focus management for accessibility
     const firstAnswer = answersContainer.querySelector('.answer-button');
@@ -336,6 +354,10 @@ function selectAnswer(selectedIndex, button) {
         // HCI Principle: Error Prevention - Learning from mistakes
         const correctAnswer = questionData.answers[correctIndex];
         showMessage('quiz-messages', `Jawaban yang benar adalah: "${correctAnswer}"`, 'error');
+
+        // Show learning tip
+        const learningTip = generateLearningTips(questionData);
+        setTimeout(() => showMessage('quiz-messages', `📚 Tip Belajar: ${learningTip}`, 'info'), 3000);
     }
 
     levelAnswers.push({
@@ -414,8 +436,8 @@ function populateResults() {
     summaryDiv.className = 'bg-blue-50 p-3 rounded-lg mb-4 border border-blue-200';
     summaryDiv.innerHTML = `
         <h4 class="font-bold text-blue-800 mb-2">📈 Statistik Kuis</h4>
-        <div class="text-sm text-blue-700">
-            <p>⏱️ Rata-rata waktu per soal: ${avgTime} detik</p>
+        <div class="text-sm text-blue-700 grid grid-cols-1 md:grid-cols-3 gap-2">
+            <p>⏱️ Rata-rata waktu: ${avgTime}s/soal</p>
             <p>🎯 Tingkat akurasi: ${percentage}%</p>
             <p>📊 Level performa: ${performanceLevel}</p>
         </div>
@@ -463,78 +485,227 @@ function populateResults() {
     });
 }
 
-function updateScoreDisplays() {
-    totalScore = 0;
-    for (const level in scores) {
-        const scoreDisplay = document.getElementById(`score-${level}`);
-        const levelButton = document.querySelector(`#level-${level} button`);
-        const maxScore = quizData[level].length;
+// Enhanced event listeners with help system
+document.addEventListener('DOMContentLoaded', () => {
+    // Help system event listeners
+    const helpButton = document.getElementById('help-button');
+    const helpModal = document.getElementById('help-modal');
+    const closeHelpBtn = document.getElementById('close-help-btn');
 
-        if (scores[level] !== null) {
-            scoreDisplay.textContent = `${scores[level]} / ${maxScore}`;
-            totalScore += scores[level];
-            levelButton.classList.add('disabled-level');
-            levelButton.disabled = true;
-            levelButton.textContent = '✅ Selesai';
-            levelButton.setAttribute('aria-label', `Level ${level} telah selesai dengan skor ${scores[level]} dari ${maxScore}`);
-        } else {
-            scoreDisplay.textContent = `- / ${maxScore}`;
-            levelButton.setAttribute('aria-label', `Mulai level ${level} - ${maxScore} pertanyaan`);
-        }
-    }
-    totalScoreDisplay.textContent = totalScore;
-    updateConfidenceDisplay();
-}
-
-// HCI Principle: User Control - Skip question functionality
-function skipQuestion() {
-    if (isPaused) return;
-
-    const levelData = quizData[currentDifficulty];
-    const questionData = levelData[currentQuestionIndex];
-
-    // Record as incorrect answer
-    levelAnswers.push({
-        question: questionData.question,
-        userChoice: "Dilewati",
-        correctChoice: questionData.answers[questionData.correct],
-        isCorrect: false,
-        timeSpent: questionStartTime ? Date.now() - questionStartTime : 0
-    });
-
-    feedbackMessage.textContent = 'Pertanyaan dilewati ⏭️';
-    feedbackMessage.style.color = '#f59e0b';
-
-    setTimeout(() => {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < levelData.length) {
-            showQuestion();
-        } else {
-            finishLevel();
-        }
-    }, 1500);
-}
-
-// HCI Principle: User Control - Review mistakes functionality
-function reviewMistakes() {
-    const mistakes = levelAnswers.filter(answer => !answer.isCorrect);
-
-    if (mistakes.length === 0) {
-        alert('🎉 Hebat! Tidak ada kesalahan untuk direview!');
-        return;
+    if (helpButton) {
+        helpButton.addEventListener('click', showHelpModal);
     }
 
-    let reviewText = `📋 Review ${mistakes.length} Kesalahan:\n\n`;
-    mistakes.forEach((mistake, index) => {
-        reviewText += `${index + 1}. ${mistake.question}\n`;
-        reviewText += `   ❌ Jawaban Anda: ${mistake.userChoice}\n`;
-        reviewText += `   ✅ Jawaban Benar: ${mistake.correctChoice}\n\n`;
+    if (closeHelpBtn) {
+        closeHelpBtn.addEventListener('click', hideHelpModal);
+    }
+
+    // Close help modal when clicking outside
+    if (helpModal) {
+        helpModal.addEventListener('click', (e) => {
+            if (e.target === helpModal) {
+                hideHelpModal();
+            }
+        });
+    }
+
+    // Skip question functionality
+    const skipBtn = document.getElementById('skip-question-btn');
+    if (skipBtn) {
+        skipBtn.addEventListener('click', skipQuestion);
+    }
+
+    // Review mistakes functionality
+    const reviewBtn = document.getElementById('review-mistakes-btn');
+    if (reviewBtn) {
+        reviewBtn.addEventListener('click', reviewMistakes);
+    }
+
+    // HCI Principle: Accessibility - Enhanced keyboard shortcuts
+    document.addEventListener('keydown', (event) => {
+        // Global keyboard shortcuts
+        if (event.ctrlKey && event.key === 'h') {
+            event.preventDefault();
+            showHelpModal();
+        }
+
+        // Quiz-specific shortcuts
+        if (!quizScreen.classList.contains('hidden')) {
+            if (event.key === 'h' && !event.ctrlKey) {
+                event.preventDefault();
+                showHint();
+            }
+
+            if (event.key === 's' && event.ctrlKey) {
+                event.preventDefault();
+                skipQuestion();
+            }
+
+            if (event.key === 'p' && event.ctrlKey) {
+                event.preventDefault();
+                pauseQuiz();
+            }
+        }
+
+        // ESC key functionality
+        if (event.key === 'Escape') {
+            // Close help modal first
+            if (!helpModal.classList.contains('hidden')) {
+                hideHelpModal();
+                return;
+            }
+
+            // Return to difficulty selection from quiz
+            if (!quizScreen.classList.contains('hidden')) {
+                if (confirm('Yakin ingin kembali ke menu utama? Progress akan hilang.')) {
+                    quizScreen.classList.add('hidden');
+                    difficultyScreen.classList.remove('hidden');
+                }
+            }
+        }
     });
 
-    alert(reviewText);
-}
+    // Enhanced populateResults with learning suggestions
+    function populateResultsEnhanced() {
+        const levelData = quizData[currentDifficulty];
+        const score = scores[currentDifficulty];
+        const total = levelData.length;
+        const percentage = Math.round((score / total) * 100);
 
-// Event Listeners with Enhanced HCI Principles
+        // Original results display code...
+        document.getElementById('results-score').textContent = `${score}/${total}`;
+        document.getElementById('results-total').textContent = total;
+        document.getElementById('results-percentage').textContent = `${percentage}%`;
+        document.getElementById('results-summary-text').textContent = `Anda menjawab ${score} benar dan ${total - score} salah.`;
+
+        // Performance level feedback with enhanced suggestions
+        let performanceLevel = '';
+        let feedbackMessage = '';
+        let feedbackClass = '';
+        let learningTips = [];
+
+        if (percentage >= 90) {
+            performanceLevel = 'Luar Biasa!';
+            feedbackMessage = '🌟 Prestasi sempurna! Anda menguasai materi dengan sangat baik.';
+            feedbackClass = 'success-message';
+            learningTips = [
+                "Coba level yang lebih sulit untuk tantangan baru",
+                "Bantu teman-teman yang kesulitan dengan materi ini",
+                "Lanjutkan ke topik pembelajaran berikutnya"
+            ];
+        } else if (percentage >= 70) {
+            performanceLevel = 'Bagus Sekali!';
+            feedbackMessage = '👍 Kerja yang baik! Anda memiliki pemahaman yang solid.';
+            feedbackClass = 'success-message';
+            learningTips = [
+                "Review beberapa kesalahan untuk pemahaman yang lebih baik",
+                "Coba level yang sama lagi untuk mencapai skor sempurna",
+                "Fokus pada area yang masih kurang dipahami"
+            ];
+        } else if (percentage >= 50) {
+            performanceLevel = 'Lumayan';
+            feedbackMessage = '📚 Masih ada ruang untuk perbaikan. Jangan menyerah!';
+            feedbackClass = 'warning-message';
+            learningTips = [
+                "Pelajari kembali materi dasar dengan lebih teliti",
+                "Gunakan fitur petunjuk lebih sering saat berlatih",
+                "Coba latihan soal tambahan di level yang sama"
+            ];
+        } else {
+            performanceLevel = 'Perlu Belajar Lagi';
+            feedbackMessage = '💪 Setiap kesalahan adalah langkah menuju kesuksesan!';
+            feedbackClass = 'error-message';
+            learningTips = [
+                "Mulai dari level yang lebih mudah terlebih dahulu",
+                "Minta bantuan guru atau teman untuk penjelasan materi",
+                "Luangkan waktu lebih banyak untuk memahami konsep dasar"
+            ];
+        }
+
+        document.getElementById('performance-level').textContent = performanceLevel;
+        const feedbackDiv = document.getElementById('performance-feedback');
+        feedbackDiv.className = feedbackClass;
+        feedbackDiv.innerHTML = `
+            <span>📊</span>
+            <div>
+                <span>${feedbackMessage}</span>
+                <div class="mt-3">
+                    <h4 class="font-semibold mb-2">💡 Saran untuk Anda:</h4>
+                    <ul class="text-sm space-y-1">
+                        ${learningTips.map(tip => `<li>• ${tip}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        // Calculate average time per question
+        const avgTime = totalTimeSpent > 0 ? Math.round(totalTimeSpent / total / 1000) : 0;
+
+        const detailsContainer = document.getElementById('results-details-container');
+        detailsContainer.innerHTML = '';
+
+        // Add summary statistics
+        const summaryDiv = document.createElement('div');
+        summaryDiv.className = 'bg-blue-50 p-3 rounded-lg mb-4 border border-blue-200';
+        summaryDiv.innerHTML = `
+            <h4 class="font-bold text-blue-800 mb-2">📈 Statistik Kuis</h4>
+            <div class="text-sm text-blue-700 grid grid-cols-1 md:grid-cols-3 gap-2">
+                <p>⏱️ Rata-rata waktu: ${avgTime}s/soal</p>
+                <p>🎯 Tingkat akurasi: ${percentage}%</p>
+                <p>📊 Level performa: ${performanceLevel}</p>
+            </div>
+        `;
+        detailsContainer.appendChild(summaryDiv);
+
+        // Detailed answer breakdown with learning tips
+        levelAnswers.forEach((answer, index) => {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `p-3 rounded-lg border-l-4 ${
+                answer.isCorrect
+                    ? 'bg-green-50 border-l-green-500'
+                    : 'bg-red-50 border-l-red-500'
+            }`;
+
+            const icon = answer.isCorrect
+                ? `<div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1 text-sm font-bold">✓</div>`
+                : `<div class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center flex-shrink-0 mt-1 text-sm font-bold">✗</div>`;
+
+            const questionTime = answer.timeSpent ? Math.round(answer.timeSpent / 1000) : 0;
+
+            let answerDetailHTML = `
+                <div class="flex items-start gap-3">
+                    ${icon}
+                    <div class="flex-1">
+                        <p class="font-semibold text-gray-700 text-sm mb-1">Soal ${index + 1}: ${answer.question}</p>
+                        <p class="text-xs ${answer.isCorrect ? 'text-green-800' : 'text-red-800'} mb-1">
+                            🗣️ Jawaban Anda: <span class="font-medium">${answer.userChoice}</span>
+                            ${answer.isCorrect ? '✅ Benar' : '❌ Salah'}
+                        </p>
+            `;
+
+            if (!answer.isCorrect) {
+                answerDetailHTML += `
+                    <p class="text-xs text-gray-600 mb-1">✅ Jawaban benar: <span class="font-semibold text-green-700">${answer.correctChoice}</span></p>
+                    <p class="text-xs text-blue-600">${generateLearningTips(answer)}</p>
+                `;
+            }
+
+            if (questionTime > 0) {
+                answerDetailHTML += `<p class="text-xs text-gray-500 mt-1">⏱️ Waktu: ${questionTime} detik</p>`;
+            }
+
+            answerDetailHTML += `</div></div>`;
+
+            resultDiv.innerHTML = answerDetailHTML;
+            detailsContainer.appendChild(resultDiv);
+        });
+    }
+
+    // Override the original populateResults function
+    window.populateResults = populateResultsEnhanced;
+});
+
+
 startButton.addEventListener('click', initializeQuiz);
 
 // HCI Principle: User Control - Multiple input methods
@@ -591,6 +762,28 @@ backToLevelsButton.addEventListener('click', () => {
 
 // Add event listeners for new controls
 document.addEventListener('DOMContentLoaded', () => {
+    // Help system event listeners
+    const helpButton = document.getElementById('help-button');
+    const helpModal = document.getElementById('help-modal');
+    const closeHelpBtn = document.getElementById('close-help-btn');
+
+    if (helpButton) {
+        helpButton.addEventListener('click', showHelpModal);
+    }
+
+    if (closeHelpBtn) {
+        closeHelpBtn.addEventListener('click', hideHelpModal);
+    }
+
+    // Close help modal when clicking outside
+    if (helpModal) {
+        helpModal.addEventListener('click', (e) => {
+            if (e.target === helpModal) {
+                hideHelpModal();
+            }
+        });
+    }
+
     // Skip question functionality
     const skipBtn = document.getElementById('skip-question-btn');
     if (skipBtn) {
@@ -603,16 +796,41 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewBtn.addEventListener('click', reviewMistakes);
     }
 
-    // HCI Principle: Accessibility - Focus management
+    // HCI Principle: Accessibility - Enhanced keyboard shortcuts
     document.addEventListener('keydown', (event) => {
         // Global keyboard shortcuts
         if (event.ctrlKey && event.key === 'h') {
             event.preventDefault();
-            alert('🔗 Bantuan Navigasi:\n\n• Tab: Navigasi antar elemen\n• Enter/Space: Pilih jawaban\n• Ctrl+P: Jeda/Lanjut (saat kuis)\n• Esc: Kembali ke menu utama');
+            showHelpModal();
         }
 
-        if (event.key === 'Escape' && !startScreen.classList.contains('hidden') === false) {
-            // Return to difficulty selection
+        // Quiz-specific shortcuts
+        if (!quizScreen.classList.contains('hidden')) {
+            if (event.key === 'h' && !event.ctrlKey) {
+                event.preventDefault();
+                showHint();
+            }
+
+            if (event.key === 's' && event.ctrlKey) {
+                event.preventDefault();
+                skipQuestion();
+            }
+
+            if (event.key === 'p' && event.ctrlKey) {
+                event.preventDefault();
+                pauseQuiz();
+            }
+        }
+
+        // ESC key functionality
+        if (event.key === 'Escape') {
+            // Close help modal first
+            if (!helpModal.classList.contains('hidden')) {
+                hideHelpModal();
+                return;
+            }
+
+            // Return to difficulty selection from quiz
             if (!quizScreen.classList.contains('hidden')) {
                 if (confirm('Yakin ingin kembali ke menu utama? Progress akan hilang.')) {
                     quizScreen.classList.add('hidden');
@@ -621,4 +839,143 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Enhanced populateResults with learning suggestions
+    function populateResultsEnhanced() {
+        const levelData = quizData[currentDifficulty];
+        const score = scores[currentDifficulty];
+        const total = levelData.length;
+        const percentage = Math.round((score / total) * 100);
+
+        // Original results display code...
+        document.getElementById('results-score').textContent = `${score}/${total}`;
+        document.getElementById('results-total').textContent = total;
+        document.getElementById('results-percentage').textContent = `${percentage}%`;
+        document.getElementById('results-summary-text').textContent = `Anda menjawab ${score} benar dan ${total - score} salah.`;
+
+        // Performance level feedback with enhanced suggestions
+        let performanceLevel = '';
+        let feedbackMessage = '';
+        let feedbackClass = '';
+        let learningTips = [];
+
+        if (percentage >= 90) {
+            performanceLevel = 'Luar Biasa!';
+            feedbackMessage = '🌟 Prestasi sempurna! Anda menguasai materi dengan sangat baik.';
+            feedbackClass = 'success-message';
+            learningTips = [
+                "Coba level yang lebih sulit untuk tantangan baru",
+                "Bantu teman-teman yang kesulitan dengan materi ini",
+                "Lanjutkan ke topik pembelajaran berikutnya"
+            ];
+        } else if (percentage >= 70) {
+            performanceLevel = 'Bagus Sekali!';
+            feedbackMessage = '👍 Kerja yang baik! Anda memiliki pemahaman yang solid.';
+            feedbackClass = 'success-message';
+            learningTips = [
+                "Review beberapa kesalahan untuk pemahaman yang lebih baik",
+                "Coba level yang sama lagi untuk mencapai skor sempurna",
+                "Fokus pada area yang masih kurang dipahami"
+            ];
+        } else if (percentage >= 50) {
+            performanceLevel = 'Lumayan';
+            feedbackMessage = '📚 Masih ada ruang untuk perbaikan. Jangan menyerah!';
+            feedbackClass = 'warning-message';
+            learningTips = [
+                "Pelajari kembali materi dasar dengan lebih teliti",
+                "Gunakan fitur petunjuk lebih sering saat berlatih",
+                "Coba latihan soal tambahan di level yang sama"
+            ];
+        } else {
+            performanceLevel = 'Perlu Belajar Lagi';
+            feedbackMessage = '💪 Setiap kesalahan adalah langkah menuju kesuksesan!';
+            feedbackClass = 'error-message';
+            learningTips = [
+                "Mulai dari level yang lebih mudah terlebih dahulu",
+                "Minta bantuan guru atau teman untuk penjelasan materi",
+                "Luangkan waktu lebih banyak untuk memahami konsep dasar"
+            ];
+        }
+
+        document.getElementById('performance-level').textContent = performanceLevel;
+        const feedbackDiv = document.getElementById('performance-feedback');
+        feedbackDiv.className = feedbackClass;
+        feedbackDiv.innerHTML = `
+            <span>📊</span>
+            <div>
+                <span>${feedbackMessage}</span>
+                <div class="mt-3">
+                    <h4 class="font-semibold mb-2">💡 Saran untuk Anda:</h4>
+                    <ul class="text-sm space-y-1">
+                        ${learningTips.map(tip => `<li>• ${tip}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        // Calculate average time per question
+        const avgTime = totalTimeSpent > 0 ? Math.round(totalTimeSpent / total / 1000) : 0;
+
+        const detailsContainer = document.getElementById('results-details-container');
+        detailsContainer.innerHTML = '';
+
+        // Add summary statistics
+        const summaryDiv = document.createElement('div');
+        summaryDiv.className = 'bg-blue-50 p-3 rounded-lg mb-4 border border-blue-200';
+        summaryDiv.innerHTML = `
+            <h4 class="font-bold text-blue-800 mb-2">📈 Statistik Kuis</h4>
+            <div class="text-sm text-blue-700 grid grid-cols-1 md:grid-cols-3 gap-2">
+                <p>⏱️ Rata-rata waktu: ${avgTime}s/soal</p>
+                <p>🎯 Tingkat akurasi: ${percentage}%</p>
+                <p>📊 Level performa: ${performanceLevel}</p>
+            </div>
+        `;
+        detailsContainer.appendChild(summaryDiv);
+
+        // Detailed answer breakdown with learning tips
+        levelAnswers.forEach((answer, index) => {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `p-3 rounded-lg border-l-4 ${
+                answer.isCorrect
+                    ? 'bg-green-50 border-l-green-500'
+                    : 'bg-red-50 border-l-red-500'
+            }`;
+
+            const icon = answer.isCorrect
+                ? `<div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-1 text-sm font-bold">✓</div>`
+                : `<div class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center flex-shrink-0 mt-1 text-sm font-bold">✗</div>`;
+
+            const questionTime = answer.timeSpent ? Math.round(answer.timeSpent / 1000) : 0;
+
+            let answerDetailHTML = `
+                <div class="flex items-start gap-3">
+                    ${icon}
+                    <div class="flex-1">
+                        <p class="font-semibold text-gray-700 text-sm mb-1">Soal ${index + 1}: ${answer.question}</p>
+                        <p class="text-xs ${answer.isCorrect ? 'text-green-800' : 'text-red-800'} mb-1">
+                            🗣️ Jawaban Anda: <span class="font-medium">${answer.userChoice}</span>
+                            ${answer.isCorrect ? '✅ Benar' : '❌ Salah'}
+                        </p>
+            `;
+
+            if (!answer.isCorrect) {
+                answerDetailHTML += `
+                    <p class="text-xs text-gray-600 mb-1">✅ Jawaban benar: <span class="font-semibold text-green-700">${answer.correctChoice}</span></p>
+                    <p class="text-xs text-blue-600">${generateLearningTips(answer)}</p>
+                `;
+            }
+
+            if (questionTime > 0) {
+                answerDetailHTML += `<p class="text-xs text-gray-500 mt-1">⏱️ Waktu: ${questionTime} detik</p>`;
+            }
+
+            answerDetailHTML += `</div></div>`;
+
+            resultDiv.innerHTML = answerDetailHTML;
+            detailsContainer.appendChild(resultDiv);
+        });
+    }
+
+    // Override the original populateResults function
+    window.populateResults = populateResultsEnhanced;
 });
